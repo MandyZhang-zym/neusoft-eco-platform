@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +18,7 @@ public class SysDistrict {
     @TableId(value = "did", type = IdType.AUTO)
     private Long did;
 
-    /** 所属市 id（sys_city.id） */
+    /** 所属市 id（sys_city.cid） */
     private Long cityId;
 
     /** 区/县行政区划代码 */
@@ -30,7 +31,7 @@ public class SysDistrict {
     private Integer sortNo;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     public Long getDid() {
         return did;
@@ -72,11 +73,11 @@ public class SysDistrict {
         this.sortNo = sortNo;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 

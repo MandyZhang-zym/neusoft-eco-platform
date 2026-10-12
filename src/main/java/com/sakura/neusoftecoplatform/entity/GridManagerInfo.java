@@ -18,10 +18,10 @@ public class GridManagerInfo {
     @TableId(value = "gmid", type = IdType.AUTO)
     private Long gmid;
 
-    /** 账号 id（sys_user.id） */
+    /** 账号 id（sys_user.uid） */
     private Long userId;
 
-    /** 负责的网格 id（sys_grid.id，可为空表示多网格） */
+    /** 负责的网格 id（sys_grid.gid，可为空表示多网格） */
     private Long gridId;
 
     /** 姓名 */

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -33,7 +34,7 @@ public class SysRole {
     private Integer sortNo;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     public Long getRid() {
         return rid;
@@ -83,11 +84,11 @@ public class SysRole {
         this.sortNo = sortNo;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 

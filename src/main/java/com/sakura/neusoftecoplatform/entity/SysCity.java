@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -18,7 +19,7 @@ public class SysCity {
     @TableId(value = "cid", type = IdType.AUTO)
     private Long cid;
 
-    /** 所属省 id（sys_province.id） */
+    /** 所属省 id（sys_province.pid） */
     private Long provinceId;
 
     /** 市级行政区划代码 */
@@ -37,7 +38,7 @@ public class SysCity {
     private Integer sortNo;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     public Long getCid() {
         return cid;
@@ -95,11 +96,11 @@ public class SysCity {
         this.sortNo = sortNo;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 

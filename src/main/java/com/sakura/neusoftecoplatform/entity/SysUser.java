@@ -26,7 +26,7 @@ public class SysUser {
     /** 手机号（亦可作为登录账号） */
     private String phone;
 
-    /** 角色 id（sys_role.id） */
+    /** 角色 id（sys_role.rid） */
     private Long roleId;
 
     /** 状态：1=正常 0=禁用 */

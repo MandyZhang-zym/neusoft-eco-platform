@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +18,7 @@ public class SupervisorInfo {
     @TableId(value = "sid", type = IdType.AUTO)
     private Long sid;
 
-    /** 账号 id（sys_user.id） */
+    /** 账号 id（sys_user.uid） */
     private Long userId;
 
     /** 姓名 */
@@ -30,10 +31,10 @@ public class SupervisorInfo {
     private Integer age;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /** 更新时间 */
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 
     public Long getSid() {
         return sid;
@@ -75,19 +76,19 @@ public class SupervisorInfo {
         this.age = age;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

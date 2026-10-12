@@ -24,7 +24,7 @@ public class FeedbackOrder {
     /** 上报人 user_id（公众监督员） */
     private Long reporterId;
 
-    /** 网格 id（sys_grid.id） */
+    /** 网格 id（sys_grid.gid） */
     private Long gridId;
 
     /** 冗余-省 id（管理端按省市筛选） */
@@ -33,7 +33,7 @@ public class FeedbackOrder {
     /** 冗余-市 id */
     private Long cityId;
 
-    /** 公众预估 AQI 等级 id（aqi_level.id） */
+    /** 公众预估 AQI 等级 id（aqi_level.lid） */
     private Long estimatedLevelId;
 
     /** 反馈信息 */

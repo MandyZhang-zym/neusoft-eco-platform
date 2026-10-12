@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -19,7 +20,7 @@ public class AqiMeasure {
     @TableId(value = "mid", type = IdType.AUTO)
     private Long mid;
 
-    /** 关联工单 id（feedback_order.id） */
+    /** 关联工单 id（feedback_order.oid） */
     private Long orderId;
 
     /** 冗余-省 id（统计用） */
@@ -37,7 +38,7 @@ public class AqiMeasure {
     /** PM2.5 浓度（ug/m³） */
     private BigDecimal pm25;
 
-    /** 自动计算出的实测 AQI 等级 id（aqi_level.id） */
+    /** 自动计算出的实测 AQI 等级 id（aqi_level.lid） */
     private Long measuredLevelId;
 
     /** 录入网格员 user_id */
@@ -47,16 +48,16 @@ public class AqiMeasure {
     private LocalDate confirmDate;
 
     /** 确认时间 */
-    private LocalDateTime confirmTime;
+    private Timestamp confirmTime;
 
     /** 备注 */
     private String remark;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /** 更新时间 */
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 
     public Long getMid() {
         return mid;
@@ -138,11 +139,11 @@ public class AqiMeasure {
         this.confirmDate = confirmDate;
     }
 
-    public LocalDateTime getConfirmTime() {
+    public Timestamp getConfirmTime() {
         return confirmTime;
     }
 
-    public void setConfirmTime(LocalDateTime confirmTime) {
+    public void setConfirmTime(Timestamp confirmTime) {
         this.confirmTime = confirmTime;
     }
 
@@ -154,19 +155,19 @@ public class AqiMeasure {
         this.remark = remark;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

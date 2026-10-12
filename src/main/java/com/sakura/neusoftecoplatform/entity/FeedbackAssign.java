@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +18,7 @@ public class FeedbackAssign {
     @TableId(value = "aid", type = IdType.AUTO)
     private Long aid;
 
-    /** 工单 id（feedback_order.id） */
+    /** 工单 id（feedback_order.oid） */
     private Long orderId;
 
     /** 目标网格员 user_id */
@@ -27,7 +28,7 @@ public class FeedbackAssign {
     private Long assignerId;
 
     /** 指派时间 */
-    private LocalDateTime assignTime;
+    private Timestamp assignTime;
 
     /** 状态：EFFECTIVE=生效 REVOKED=已撤销 */
     private String status;
@@ -70,11 +71,11 @@ public class FeedbackAssign {
         this.assignerId = assignerId;
     }
 
-    public LocalDateTime getAssignTime() {
+    public Timestamp getAssignTime() {
         return assignTime;
     }
 
-    public void setAssignTime(LocalDateTime assignTime) {
+    public void setAssignTime(Timestamp assignTime) {
         this.assignTime = assignTime;
     }
 

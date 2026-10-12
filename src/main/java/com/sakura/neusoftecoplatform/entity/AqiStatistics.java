@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -43,7 +44,7 @@ public class AqiStatistics {
     private BigDecimal metricValue;
 
     /** 生成时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     public Long getStid() {
         return stid;
@@ -117,11 +118,11 @@ public class AqiStatistics {
         this.metricValue = metricValue;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
