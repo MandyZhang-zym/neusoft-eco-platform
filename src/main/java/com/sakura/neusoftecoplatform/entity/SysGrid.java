@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class SysGrid {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "gid", type = IdType.AUTO)
+    private Long gid;
 
     /** 网格编号 */
     private String gridCode;
@@ -51,12 +51,12 @@ public class SysGrid {
     /** 更新时间 */
     private LocalDateTime updateTime;
 
-    public Long getId() {
-        return id;
+    public Long getGid() {
+        return gid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setGid(Long gid) {
+        this.gid = gid;
     }
 
     public String getGridCode() {
@@ -150,7 +150,7 @@ public class SysGrid {
     @Override
     public String toString() {
         return "SysGrid{"
-                + "id=" + id
+                + "gid=" + gid
                 + ", gridCode='" + gridCode + '\''
                 + ", gridName='" + gridName + '\''
                 + ", provinceId=" + provinceId

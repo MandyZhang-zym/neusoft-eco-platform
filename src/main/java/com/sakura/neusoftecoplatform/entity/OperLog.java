@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class OperLog {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "opid", type = IdType.AUTO)
+    private Long opid;
 
     /** 操作人 user_id */
     private Long userId;
@@ -50,12 +50,12 @@ public class OperLog {
     /** 操作时间 */
     private LocalDateTime operTime;
 
-    public Long getId() {
-        return id;
+    public Long getOpid() {
+        return opid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOpid(Long opid) {
+        this.opid = opid;
     }
 
     public Long getUserId() {
@@ -149,7 +149,7 @@ public class OperLog {
     @Override
     public String toString() {
         return "OperLog{"
-                + "id=" + id
+                + "opid=" + opid
                 + ", userId=" + userId
                 + ", username='" + username + '\''
                 + ", module='" + module + '\''

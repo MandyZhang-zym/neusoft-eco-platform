@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class SysCity {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "cid", type = IdType.AUTO)
+    private Long cid;
 
     /** 所属省 id（sys_province.id） */
     private Long provinceId;
@@ -39,12 +39,12 @@ public class SysCity {
     /** 创建时间 */
     private LocalDateTime createTime;
 
-    public Long getId() {
-        return id;
+    public Long getCid() {
+        return cid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCid(Long cid) {
+        this.cid = cid;
     }
 
     public Long getProvinceId() {
@@ -106,7 +106,7 @@ public class SysCity {
     @Override
     public String toString() {
         return "SysCity{"
-                + "id=" + id
+                + "cid=" + cid
                 + ", provinceId=" + provinceId
                 + ", cityCode='" + cityCode + '\''
                 + ", cityName='" + cityName + '\''

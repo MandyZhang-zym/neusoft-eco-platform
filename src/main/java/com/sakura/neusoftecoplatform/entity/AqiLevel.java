@@ -12,8 +12,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 public class AqiLevel {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "lid", type = IdType.AUTO)
+    private Long lid;
 
     /** 等级序号 1~6 */
     private Integer levelNo;
@@ -36,12 +36,12 @@ public class AqiLevel {
     /** 健康影响说明 */
     private String description;
 
-    public Long getId() {
-        return id;
+    public Long getLid() {
+        return lid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setLid(Long lid) {
+        this.lid = lid;
     }
 
     public Integer getLevelNo() {
@@ -103,7 +103,7 @@ public class AqiLevel {
     @Override
     public String toString() {
         return "AqiLevel{"
-                + "id=" + id
+                + "lid=" + lid
                 + ", levelNo=" + levelNo
                 + ", levelName='" + levelName + '\''
                 + ", aqiMin=" + aqiMin

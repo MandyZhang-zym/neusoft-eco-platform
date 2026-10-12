@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class AqiMeasure {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "mid", type = IdType.AUTO)
+    private Long mid;
 
     /** 关联工单 id（feedback_order.id） */
     private Long orderId;
@@ -58,12 +58,12 @@ public class AqiMeasure {
     /** 更新时间 */
     private LocalDateTime updateTime;
 
-    public Long getId() {
-        return id;
+    public Long getMid() {
+        return mid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setMid(Long mid) {
+        this.mid = mid;
     }
 
     public Long getOrderId() {
@@ -173,7 +173,7 @@ public class AqiMeasure {
     @Override
     public String toString() {
         return "AqiMeasure{"
-                + "id=" + id
+                + "mid=" + mid
                 + ", orderId=" + orderId
                 + ", provinceId=" + provinceId
                 + ", cityId=" + cityId

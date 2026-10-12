@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class SysUser {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "uid", type = IdType.AUTO)
+    private Long uid;
 
     /** 用户名（登录账号） */
     private String username;
@@ -41,12 +41,12 @@ public class SysUser {
     /** 更新时间 */
     private LocalDateTime updateTime;
 
-    public Long getId() {
-        return id;
+    public Long getUid() {
+        return uid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUid(Long uid) {
+        this.uid = uid;
     }
 
     public String getUsername() {
@@ -116,7 +116,7 @@ public class SysUser {
     @Override
     public String toString() {
         return "SysUser{"
-                + "id=" + id
+                + "uid=" + uid
                 + ", username='" + username + '\''
                 + ", password='" + password + '\''
                 + ", phone='" + phone + '\''

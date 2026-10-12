@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class GridManagerInfo {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "gmid", type = IdType.AUTO)
+    private Long gmid;
 
     /** 账号 id（sys_user.id） */
     private Long userId;
@@ -38,12 +38,12 @@ public class GridManagerInfo {
     /** 更新时间 */
     private LocalDateTime updateTime;
 
-    public Long getId() {
-        return id;
+    public Long getGmid() {
+        return gmid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setGmid(Long gmid) {
+        this.gmid = gmid;
     }
 
     public Long getUserId() {
@@ -105,7 +105,7 @@ public class GridManagerInfo {
     @Override
     public String toString() {
         return "GridManagerInfo{"
-                + "id=" + id
+                + "gmid=" + gmid
                 + ", userId=" + userId
                 + ", gridId=" + gridId
                 + ", realName='" + realName + '\''

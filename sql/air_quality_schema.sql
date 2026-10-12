@@ -30,20 +30,20 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS sys_role;
 CREATE TABLE sys_role
 (
-    id          BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
+    rid         BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
     role_code   VARCHAR(32)  NOT NULL COMMENT '角色标识（英文 code）',
     role_name   VARCHAR(32)  NOT NULL COMMENT '角色名称',
     home_page   VARCHAR(100) DEFAULT NULL COMMENT '登录后跳转的首页路由（前端根据角色跳转）',
     description VARCHAR(200) DEFAULT NULL COMMENT '角色说明',
     sort_no     INT          NOT NULL DEFAULT 0 COMMENT '排序',
     create_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (rid),
     UNIQUE KEY uk_role_code (role_code)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='角色表';
 
-INSERT IGNORE INTO sys_role (id, role_code, role_name, home_page, description, sort_no)
+INSERT IGNORE INTO sys_role (rid, role_code, role_name, home_page, description, sort_no)
 VALUES (1, 'SUPERVISOR', '公众监督员', '/supervisor/grid', '公众端：选择网格、上报 AQI 监督信息、查看历史反馈', 1),
        (2, 'GRID_MANAGER', '网格员', '/manager/task', '网格员端：查询指派任务、实地检测并录入实测数据', 2),
        (3, 'ADMIN', '系统管理员', '/admin/feedback', '管理端：查询反馈工单、指派任务、查询实测数据、生成统计', 3),
@@ -57,7 +57,7 @@ VALUES (1, 'SUPERVISOR', '公众监督员', '/supervisor/grid', '公众端：选
 DROP TABLE IF EXISTS aqi_level;
 CREATE TABLE aqi_level
 (
-    id          BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
+    lid         BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
     level_no    TINYINT      NOT NULL COMMENT '等级序号 1~6',
     level_name  VARCHAR(20)  NOT NULL COMMENT '等级名称',
     aqi_min     INT          NOT NULL COMMENT 'AQI 下限',
@@ -65,13 +65,13 @@ CREATE TABLE aqi_level
     is_exceed   TINYINT      NOT NULL DEFAULT 0 COMMENT '是否计入"超标"：1=是 0=否',
     color       VARCHAR(20)  DEFAULT NULL COMMENT '大屏配色（十六进制）',
     description VARCHAR(200) DEFAULT NULL COMMENT '健康影响说明',
-    PRIMARY KEY (id),
+    PRIMARY KEY (lid),
     UNIQUE KEY uk_aqi_level_no (level_no)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='空气质量指数等级分类表';
 
-INSERT IGNORE INTO aqi_level (id, level_no, level_name, aqi_min, aqi_max, is_exceed, color, description)
+INSERT IGNORE INTO aqi_level (lid, level_no, level_name, aqi_min, aqi_max, is_exceed, color, description)
 VALUES (1, 1, '优', 0, 50, 0, '#00E400', '空气质量令人满意，基本无空气污染'),
        (2, 2, '良', 51, 100, 0, '#FFFF00', '除少数敏感人群外可正常活动'),
        (3, 3, '轻度污染', 101, 150, 1, '#FF7E00', '敏感人群症状有轻度加剧，健康人群出现刺激症状'),
@@ -86,7 +86,7 @@ VALUES (1, 1, '优', 0, 50, 0, '#00E400', '空气质量令人满意，基本无�
 DROP TABLE IF EXISTS sys_province;
 CREATE TABLE sys_province
 (
-    id            BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    pid         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
     province_code VARCHAR(12) NOT NULL COMMENT '省级行政区划代码',
     province_name VARCHAR(50) NOT NULL COMMENT '省/自治区/直辖市名称（大屏地图按此名称注册）',
     short_name    VARCHAR(20) DEFAULT NULL COMMENT '简称',
@@ -94,14 +94,14 @@ CREATE TABLE sys_province
     latitude      DECIMAL(10, 6) DEFAULT NULL COMMENT '中心纬度（如需地图打点，可后续导入）',
     sort_no       INT         NOT NULL DEFAULT 0 COMMENT '排序',
     create_time   DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (pid),
     UNIQUE KEY uk_province_code (province_code),
     UNIQUE KEY uk_province_name (province_name)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='省表';
 
-INSERT IGNORE INTO sys_province (id, province_code, province_name, short_name, sort_no)
+INSERT IGNORE INTO sys_province (pid, province_code, province_name, short_name, sort_no)
 VALUES (1, '110000', '北京市', '京', 1),
        (2, '120000', '天津市', '津', 2),
        (3, '130000', '河北省', '冀', 3),
@@ -146,7 +146,7 @@ VALUES (1, '110000', '北京市', '京', 1),
 DROP TABLE IF EXISTS sys_city;
 CREATE TABLE sys_city
 (
-    id          BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    cid         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
     province_id BIGINT      NOT NULL COMMENT '所属省 id（sys_province.id）',
     city_code   VARCHAR(12) NOT NULL COMMENT '市级行政区划代码',
     city_name   VARCHAR(50) NOT NULL COMMENT '城市名称',
@@ -154,14 +154,14 @@ CREATE TABLE sys_city
     latitude    DECIMAL(10, 6) DEFAULT NULL COMMENT '中心纬度',
     sort_no     INT         NOT NULL DEFAULT 0 COMMENT '排序',
     create_time DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (cid),
     UNIQUE KEY uk_city_code (city_code),
     KEY idx_city_province (province_id)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='市表';
 
-INSERT IGNORE INTO sys_city (id, province_id, city_code, city_name, sort_no)
+INSERT IGNORE INTO sys_city (cid, province_id, city_code, city_name, sort_no)
 VALUES
     -- 辽宁省（全部 14 个地级市）
     (1, 6, '210100', '沈阳市', 1),
@@ -205,13 +205,13 @@ VALUES
 DROP TABLE IF EXISTS sys_district;
 CREATE TABLE sys_district
 (
-    id            BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    did         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
     city_id       BIGINT      NOT NULL COMMENT '所属市 id（sys_city.id）',
     district_code VARCHAR(12) NOT NULL COMMENT '区/县行政区划代码',
     district_name VARCHAR(50) NOT NULL COMMENT '区/县名称',
     sort_no       INT         NOT NULL DEFAULT 0 COMMENT '排序',
     create_time   DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (did),
     UNIQUE KEY uk_district_code (district_code),
     KEY idx_district_city (city_id)
 ) ENGINE = InnoDB
@@ -219,7 +219,7 @@ CREATE TABLE sys_district
   COLLATE = utf8mb4_general_ci COMMENT ='区/县表';
 
 -- 示例：大连市下辖区县
-INSERT IGNORE INTO sys_district (id, city_id, district_code, district_name, sort_no)
+INSERT IGNORE INTO sys_district (did, city_id, district_code, district_name, sort_no)
 VALUES (1, 2, '210202', '中山区', 1),
        (2, 2, '210203', '西岗区', 2),
        (3, 2, '210204', '沙河口区', 3),
@@ -235,7 +235,7 @@ VALUES (1, 2, '210202', '中山区', 1),
 DROP TABLE IF EXISTS sys_grid;
 CREATE TABLE sys_grid
 (
-    id          BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
+    gid         BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
     grid_code   VARCHAR(32)  NOT NULL COMMENT '网格编号',
     grid_name   VARCHAR(100) NOT NULL COMMENT '网格名称',
     province_id BIGINT       NOT NULL COMMENT '所属省 id',
@@ -247,7 +247,7 @@ CREATE TABLE sys_grid
     status      TINYINT      NOT NULL DEFAULT 1 COMMENT '状态：1=启用 0=停用',
     create_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (gid),
     UNIQUE KEY uk_grid_code (grid_code),
     KEY idx_grid_province (province_id),
     KEY idx_grid_city (city_id)
@@ -255,7 +255,7 @@ CREATE TABLE sys_grid
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_general_ci COMMENT ='网格表';
 
-INSERT IGNORE INTO sys_grid (id, grid_code, grid_name, province_id, city_id, district_id, address, longitude, latitude, status)
+INSERT IGNORE INTO sys_grid (gid, grid_code, grid_name, province_id, city_id, district_id, address, longitude, latitude, status)
 VALUES (1, 'GRID-DL-001', '大连市中山区人民路网格', 6, 2, 1, '辽宁省大连市中山区人民路', 121.639000, 38.918000, 1),
        (2, 'GRID-DL-002', '大连市西岗区香炉礁网格', 6, 2, 2, '辽宁省大连市西岗区香炉礁街道', 121.604000, 38.928000, 1),
        (3, 'GRID-DL-003', '大连市沙河口区星海广场网格', 6, 2, 3, '辽宁省大连市沙河口区星海广场', 121.587000, 38.880000, 1),
@@ -276,7 +276,7 @@ VALUES (1, 'GRID-DL-001', '大连市中山区人民路网格', 6, 2, 1, '辽宁�
 DROP TABLE IF EXISTS sys_user;
 CREATE TABLE sys_user
 (
-    id              BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
+    uid         BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
     username        VARCHAR(50)  NOT NULL COMMENT '用户名（登录账号）',
     password        VARCHAR(100) NOT NULL COMMENT '密码（建议存 BCrypt 哈希，勿存明文）',
     phone           VARCHAR(20)  NOT NULL COMMENT '手机号（亦可作为登录账号）',
@@ -285,7 +285,7 @@ CREATE TABLE sys_user
     last_login_time DATETIME     DEFAULT NULL COMMENT '最近登录时间',
     create_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (uid),
     UNIQUE KEY uk_user_username (username),
     UNIQUE KEY uk_user_phone (phone),
     KEY idx_user_role (role_id)
@@ -302,14 +302,14 @@ CREATE TABLE sys_user
 DROP TABLE IF EXISTS supervisor_info;
 CREATE TABLE supervisor_info
 (
-    id          BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    sid         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
     user_id     BIGINT      NOT NULL COMMENT '账号 id（sys_user.id）',
     real_name   VARCHAR(50) DEFAULT NULL COMMENT '姓名',
     gender      TINYINT     DEFAULT NULL COMMENT '性别：1=男 2=女',
     age         INT         DEFAULT NULL COMMENT '年龄',
     create_time DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (sid),
     UNIQUE KEY uk_sup_user (user_id),
     KEY idx_sup_phone (real_name)
 ) ENGINE = InnoDB
@@ -325,7 +325,7 @@ CREATE TABLE supervisor_info
 DROP TABLE IF EXISTS grid_manager_info;
 CREATE TABLE grid_manager_info
 (
-    id          BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    gmid        BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
     user_id     BIGINT      NOT NULL COMMENT '账号 id（sys_user.id）',
     grid_id     BIGINT      DEFAULT NULL COMMENT '负责的网格 id（sys_grid.id，可为空表示多网格）',
     real_name   VARCHAR(50) DEFAULT NULL COMMENT '姓名',
@@ -333,7 +333,7 @@ CREATE TABLE grid_manager_info
     work_no     VARCHAR(32) DEFAULT NULL COMMENT '工号',
     create_time DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (gmid),
     UNIQUE KEY uk_gmi_user (user_id),
     KEY idx_gmi_grid (grid_id)
 ) ENGINE = InnoDB
@@ -356,7 +356,7 @@ CREATE TABLE grid_manager_info
 DROP TABLE IF EXISTS feedback_order;
 CREATE TABLE feedback_order
 (
-    id                 BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
+    oid         BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
     order_no           VARCHAR(32)  NOT NULL COMMENT '工单编号',
     reporter_id        BIGINT       NOT NULL COMMENT '上报人 user_id（公众监督员）',
     grid_id            BIGINT       NOT NULL COMMENT '网格 id（sys_grid.id）',
@@ -371,7 +371,7 @@ CREATE TABLE feedback_order
     check_time         DATETIME     DEFAULT NULL COMMENT '核查完成时间',
     create_time        DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time        DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (oid),
     UNIQUE KEY uk_order_no (order_no),
     KEY idx_order_status_time (status, feedback_time),
     KEY idx_order_reporter (reporter_id),
@@ -390,7 +390,7 @@ CREATE TABLE feedback_order
 DROP TABLE IF EXISTS feedback_assign;
 CREATE TABLE feedback_assign
 (
-    id              BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
+    aid         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
     order_id        BIGINT      NOT NULL COMMENT '工单 id（feedback_order.id）',
     grid_manager_id BIGINT      NOT NULL COMMENT '目标网格员 user_id',
     assigner_id     BIGINT      NOT NULL COMMENT '操作人 user_id（系统管理员）',
@@ -398,7 +398,7 @@ CREATE TABLE feedback_assign
     status          VARCHAR(20) NOT NULL DEFAULT 'EFFECTIVE' COMMENT '状态：EFFECTIVE=生效 REVOKED=已撤销',
     remark          VARCHAR(200) DEFAULT NULL COMMENT '备注',
     create_time     DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (aid),
     KEY idx_assign_order (order_id),
     KEY idx_assign_manager (grid_manager_id)
 ) ENGINE = InnoDB
@@ -415,7 +415,7 @@ CREATE TABLE feedback_assign
 DROP TABLE IF EXISTS aqi_measure;
 CREATE TABLE aqi_measure
 (
-    id                BIGINT         NOT NULL AUTO_INCREMENT COMMENT '主键',
+    mid         BIGINT         NOT NULL AUTO_INCREMENT COMMENT '主键',
     order_id          BIGINT         NOT NULL COMMENT '关联工单 id（feedback_order.id）',
     province_id       BIGINT         NOT NULL COMMENT '冗余-省 id（统计用）',
     city_id           BIGINT         NOT NULL COMMENT '冗余-市 id（统计用）',
@@ -429,7 +429,7 @@ CREATE TABLE aqi_measure
     remark            VARCHAR(200)   DEFAULT NULL COMMENT '备注',
     create_time       DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time       DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (mid),
     UNIQUE KEY uk_measure_order (order_id),
     KEY idx_measure_confirm_date (confirm_date),
     KEY idx_measure_province_city (province_id, city_id),
@@ -455,7 +455,7 @@ CREATE TABLE aqi_measure
 DROP TABLE IF EXISTS aqi_statistics;
 CREATE TABLE aqi_statistics
 (
-    id             BIGINT         NOT NULL AUTO_INCREMENT COMMENT '主键',
+    stid        BIGINT         NOT NULL AUTO_INCREMENT COMMENT '主键',
     stat_type      VARCHAR(30)    NOT NULL COMMENT '统计类型：AQI_LEVEL_DIST=等级分布 PROVINCE_EXCEED=各省超标 MONTH_TREND=12个月趋势 GRID_COVERAGE=网格覆盖率 POLLUTANT_EXCEED=污染物超标',
     stat_dimension VARCHAR(20)    NOT NULL COMMENT '统计维度：PROVINCE/CITY/GRID/MONTH/DAY/ALL',
     dimension_id   BIGINT         DEFAULT NULL COMMENT '维度对象 id（省/市/网格 id，按维度含义使用）',
@@ -465,7 +465,7 @@ CREATE TABLE aqi_statistics
     pollutant      VARCHAR(10)    DEFAULT NULL COMMENT '污染物种类：PM25 / SO2 / CO',
     metric_value   DECIMAL(14, 2) NOT NULL DEFAULT 0 COMMENT '指标值（数量或百分比，按 stat_type 解释）',
     create_time    DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '生成时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (stid),
     KEY idx_stat_type_period (stat_type, stat_period),
     KEY idx_stat_dimension (stat_dimension, dimension_id)
 ) ENGINE = InnoDB
@@ -480,7 +480,7 @@ CREATE TABLE aqi_statistics
 DROP TABLE IF EXISTS aqi_stat_summary;
 CREATE TABLE aqi_stat_summary
 (
-    id                BIGINT        NOT NULL AUTO_INCREMENT COMMENT '主键',
+    smid        BIGINT        NOT NULL AUTO_INCREMENT COMMENT '主键',
     stat_period       VARCHAR(20)   NOT NULL COMMENT '统计周期，如 2026-10',
     measure_total     INT           NOT NULL DEFAULT 0 COMMENT '检测总量',
     pollution_count   INT           NOT NULL DEFAULT 0 COMMENT '污染数量',
@@ -490,7 +490,7 @@ CREATE TABLE aqi_stat_summary
     grid_coverage     DECIMAL(6, 2) NOT NULL DEFAULT 0 COMMENT '网格覆盖率（%）',
     create_time       DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time       DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (smid),
     UNIQUE KEY uk_summary_period (stat_period)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -509,7 +509,7 @@ CREATE TABLE aqi_stat_summary
 DROP TABLE IF EXISTS oper_log;
 CREATE TABLE oper_log
 (
-    id            BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
+    opid        BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
     user_id       BIGINT       DEFAULT NULL COMMENT '操作人 user_id',
     username      VARCHAR(50)  DEFAULT NULL COMMENT '操作人用户名（冗余，便于直接展示）',
     module        VARCHAR(50)  DEFAULT NULL COMMENT '所属模块，如 反馈工单/指派/核查',
@@ -521,7 +521,7 @@ CREATE TABLE oper_log
     status        TINYINT      NOT NULL DEFAULT 1 COMMENT '结果：1=成功 0=失败',
     error_msg     VARCHAR(500) DEFAULT NULL COMMENT '失败原因',
     oper_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
-    PRIMARY KEY (id),
+    PRIMARY KEY (opid),
     KEY idx_log_order (order_id),
     KEY idx_log_user (user_id),
     KEY idx_log_time (oper_time)

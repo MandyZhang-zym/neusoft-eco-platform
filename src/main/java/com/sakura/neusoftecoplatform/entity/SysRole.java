@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class SysRole {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "rid", type = IdType.AUTO)
+    private Long rid;
 
     /** 角色标识（英文 code） */
     private String roleCode;
@@ -35,12 +35,12 @@ public class SysRole {
     /** 创建时间 */
     private LocalDateTime createTime;
 
-    public Long getId() {
-        return id;
+    public Long getRid() {
+        return rid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setRid(Long rid) {
+        this.rid = rid;
     }
 
     public String getRoleCode() {
@@ -94,7 +94,7 @@ public class SysRole {
     @Override
     public String toString() {
         return "SysRole{"
-                + "id=" + id
+                + "rid=" + rid
                 + ", roleCode='" + roleCode + '\''
                 + ", roleName='" + roleName + '\''
                 + ", homePage='" + homePage + '\''

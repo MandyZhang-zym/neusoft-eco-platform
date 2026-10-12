@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class SysProvince {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "pid", type = IdType.AUTO)
+    private Long pid;
 
     /** 省级行政区划代码 */
     private String provinceCode;
@@ -39,12 +39,12 @@ public class SysProvince {
     /** 创建时间 */
     private LocalDateTime createTime;
 
-    public Long getId() {
-        return id;
+    public Long getPid() {
+        return pid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPid(Long pid) {
+        this.pid = pid;
     }
 
     public String getProvinceCode() {
@@ -106,7 +106,7 @@ public class SysProvince {
     @Override
     public String toString() {
         return "SysProvince{"
-                + "id=" + id
+                + "pid=" + pid
                 + ", provinceCode='" + provinceCode + '\''
                 + ", provinceName='" + provinceName + '\''
                 + ", shortName='" + shortName + '\''

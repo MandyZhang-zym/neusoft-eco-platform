@@ -11,7 +11,7 @@
 -- ---------------------------------------------------------------------------
 -- 1. 账号（4 种角色各一个 + 额外监督员/网格员）  统一密码：123456
 -- ---------------------------------------------------------------------------
-INSERT IGNORE INTO sys_user (id, username, password, phone, role_id, status) VALUES
+INSERT IGNORE INTO sys_user (uid, username, password, phone, role_id, status) VALUES
   (1, 'admin', '123456', '13800000001', 3, 1),
   (2, 'supervisor01', '123456', '13800000002', 1, 1),
   (3, 'supervisor02', '123456', '13800000003', 1, 1),
@@ -19,18 +19,18 @@ INSERT IGNORE INTO sys_user (id, username, password, phone, role_id, status) VAL
   (5, 'manager02', '123456', '13800000005', 2, 1),
   (6, 'decision01', '123456', '13800000006', 4, 1);
 
-INSERT IGNORE INTO supervisor_info (id, user_id, real_name, gender, age) VALUES
+INSERT IGNORE INTO supervisor_info (sid, user_id, real_name, gender, age) VALUES
   (1, 2, '徐禄欢', 1, 22),
   (2, 3, '张雨曼', 2, 21);
 
-INSERT IGNORE INTO grid_manager_info (id, user_id, grid_id, real_name, gender, work_no) VALUES
+INSERT IGNORE INTO grid_manager_info (gmid, user_id, grid_id, real_name, gender, work_no) VALUES
   (1, 4, 1, '李网格', 1, 'GM2026001'),
   (2, 5, 3, '王网格', 1, 'GM2026002');
 
 -- ---------------------------------------------------------------------------
 -- 2. 其他省份的演示网格（补充 sys_grid，便于各省统计与大屏）
 -- ---------------------------------------------------------------------------
-INSERT IGNORE INTO sys_grid (id, grid_code, grid_name, province_id, city_id, district_id, address, longitude, latitude, status) VALUES
+INSERT IGNORE INTO sys_grid (gid, grid_code, grid_name, province_id, city_id, district_id, address, longitude, latitude, status) VALUES
   (6, 'GRID-BJ-001', '北京市朝阳区CBD网格', 1, 15, NULL, '北京市朝阳区国贸商圈', 116.461, 39.909, 1),
   (7, 'GRID-SH-001', '上海市浦东新区陆家嘴网格', 9, 17, NULL, '上海市浦东新区陆家嘴金融城', 121.506, 31.245, 1),
   (8, 'GRID-GZ-001', '广州市天河区珠江新城网格', 19, 19, NULL, '广东省广州市天河区珠江新城', 113.324, 23.12, 1),
@@ -43,7 +43,7 @@ INSERT IGNORE INTO sys_grid (id, grid_code, grid_name, province_id, city_id, dis
 -- 3. 公众反馈工单（12 个月 × 每月 2 条已核查 + 1 条流转中）
 -- ---------------------------------------------------------------------------
 INSERT IGNORE INTO feedback_order
-  (id, order_no, reporter_id, grid_id, province_id, city_id, estimated_level_id,
+  (oid, order_no, reporter_id, grid_id, province_id, city_id, estimated_level_id,
    feedback_content, feedback_time, status, assignee_id, assign_time, check_time) VALUES
   (1, 'AQI2025110001', 3, 1, 6, 2, 4, '公众巡查发现该网格能见度较低，预估空气质量为「中度污染」，请安排实地检测。', '2025-11-05 09:30:00', 'CHECKED', 5, '2025-11-05 14:00:00', '2025-11-07 16:20:00'),
   (2, 'AQI2025110002', 2, 2, 6, 2, 5, '公众巡查发现该网格能见度较低，预估空气质量为「重度污染」，请安排实地检测。', '2025-11-18 09:30:00', 'CHECKED', 4, '2025-11-18 14:00:00', '2025-11-20 16:20:00'),
@@ -85,7 +85,7 @@ INSERT IGNORE INTO feedback_order
 -- ---------------------------------------------------------------------------
 -- 4. 工单指派记录
 -- ---------------------------------------------------------------------------
-INSERT IGNORE INTO feedback_assign (id, order_id, grid_manager_id, assigner_id, assign_time, status, remark) VALUES
+INSERT IGNORE INTO feedback_assign (aid, order_id, grid_manager_id, assigner_id, assign_time, status, remark) VALUES
   (1, 1, 5, 1, '2025-11-05 14:00:00', 'EFFECTIVE', '管理端指派'),
   (2, 2, 4, 1, '2025-11-18 14:00:00', 'EFFECTIVE', '管理端指派'),
   (3, 3, 5, 1, '2025-12-05 14:00:00', 'EFFECTIVE', '管理端指派'),
@@ -121,7 +121,7 @@ INSERT IGNORE INTO feedback_assign (id, order_id, grid_manager_id, assigner_id, 
 -- 5. AQI 实测数据（每个已核查工单一条，order_id 唯一）
 -- ---------------------------------------------------------------------------
 INSERT IGNORE INTO aqi_measure
-  (id, order_id, province_id, city_id, so2, co, pm25, measured_level_id,
+  (mid, order_id, province_id, city_id, so2, co, pm25, measured_level_id,
    grid_manager_id, confirm_date, confirm_time) VALUES
   (1, 1, 6, 2, 263, 5530, 203, 4, 5, '2025-11-07', '2025-11-07 16:20:00'),
   (2, 2, 6, 2, 456, 9560, 306, 5, 4, '2025-11-20', '2025-11-20 16:20:00'),
@@ -152,7 +152,7 @@ INSERT IGNORE INTO aqi_measure
 -- 6. 统计数据（需求 NO.55/NO.58，由 aqi_measure 聚合而来）
 -- ---------------------------------------------------------------------------
 INSERT IGNORE INTO aqi_statistics
-  (id, stat_type, stat_dimension, dimension_id, dimension_name, stat_period, aqi_level_id, pollutant, metric_value) VALUES
+  (stid, stat_type, stat_dimension, dimension_id, dimension_name, stat_period, aqi_level_id, pollutant, metric_value) VALUES
   (1, 'AQI_LEVEL_DIST', 'ALL', NULL, '全国', '2026-10', 1, NULL, 3),
   (2, 'AQI_LEVEL_DIST', 'ALL', NULL, '全国', '2026-10', 2, NULL, 7),
   (3, 'AQI_LEVEL_DIST', 'ALL', NULL, '全国', '2026-10', 3, NULL, 6),
@@ -195,13 +195,13 @@ INSERT IGNORE INTO aqi_statistics
 
 -- 大屏顶部指标卡片
 INSERT IGNORE INTO aqi_stat_summary
-  (id, stat_period, measure_total, pollution_count, improvement_count, grid_total, grid_covered, grid_coverage) VALUES
+  (smid, stat_period, measure_total, pollution_count, improvement_count, grid_total, grid_covered, grid_coverage) VALUES
   (1, '2026-10', 24, 14, 10, 12, 9, 75.0);
 
 -- ---------------------------------------------------------------------------
 -- 7. 操作日志（指派操作的追溯记录，需求 NO.45/NO.48）
 -- ---------------------------------------------------------------------------
-INSERT IGNORE INTO oper_log (id, user_id, username, module, operation, method, request_param, order_id, ip, status, oper_time) VALUES
+INSERT IGNORE INTO oper_log (opid, user_id, username, module, operation, method, request_param, order_id, ip, status, oper_time) VALUES
   (1, 1, 'admin', '反馈工单', '指派工单', 'POST /api/admin/feedback/assign', '{"orderId":1,"gridManagerId":5}', 1, '127.0.0.1', 1, '2025-11-05 14:00:00'),
   (2, 1, 'admin', '反馈工单', '指派工单', 'POST /api/admin/feedback/assign', '{"orderId":2,"gridManagerId":4}', 2, '127.0.0.1', 1, '2025-11-18 14:00:00'),
   (3, 1, 'admin', '反馈工单', '指派工单', 'POST /api/admin/feedback/assign', '{"orderId":3,"gridManagerId":5}', 3, '127.0.0.1', 1, '2025-12-05 14:00:00'),

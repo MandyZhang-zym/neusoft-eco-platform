@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class SupervisorInfo {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "sid", type = IdType.AUTO)
+    private Long sid;
 
     /** 账号 id（sys_user.id） */
     private Long userId;
@@ -35,12 +35,12 @@ public class SupervisorInfo {
     /** 更新时间 */
     private LocalDateTime updateTime;
 
-    public Long getId() {
-        return id;
+    public Long getSid() {
+        return sid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSid(Long sid) {
+        this.sid = sid;
     }
 
     public Long getUserId() {
@@ -94,7 +94,7 @@ public class SupervisorInfo {
     @Override
     public String toString() {
         return "SupervisorInfo{"
-                + "id=" + id
+                + "sid=" + sid
                 + ", userId=" + userId
                 + ", realName='" + realName + '\''
                 + ", gender=" + gender

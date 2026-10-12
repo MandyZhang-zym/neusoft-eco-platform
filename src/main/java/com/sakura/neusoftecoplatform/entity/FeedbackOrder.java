@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class FeedbackOrder {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "oid", type = IdType.AUTO)
+    private Long oid;
 
     /** 工单编号 */
     private String orderNo;
@@ -59,12 +59,12 @@ public class FeedbackOrder {
     /** 更新时间 */
     private LocalDateTime updateTime;
 
-    public Long getId() {
-        return id;
+    public Long getOid() {
+        return oid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setOid(Long oid) {
+        this.oid = oid;
     }
 
     public String getOrderNo() {
@@ -182,7 +182,7 @@ public class FeedbackOrder {
     @Override
     public String toString() {
         return "FeedbackOrder{"
-                + "id=" + id
+                + "oid=" + oid
                 + ", orderNo='" + orderNo + '\''
                 + ", reporterId=" + reporterId
                 + ", gridId=" + gridId

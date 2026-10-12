@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class AqiStatistics {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "stid", type = IdType.AUTO)
+    private Long stid;
 
     /** 统计类型：AQI_LEVEL_DIST=等级分布 PROVINCE_EXCEED=各省超标 MONTH_TREND=12个月趋势 GRID_COVERAGE=网格覆盖率 POLLUTANT_EXCEED=污染物超标 */
     private String statType;
@@ -45,12 +45,12 @@ public class AqiStatistics {
     /** 生成时间 */
     private LocalDateTime createTime;
 
-    public Long getId() {
-        return id;
+    public Long getStid() {
+        return stid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setStid(Long stid) {
+        this.stid = stid;
     }
 
     public String getStatType() {
@@ -128,7 +128,7 @@ public class AqiStatistics {
     @Override
     public String toString() {
         return "AqiStatistics{"
-                + "id=" + id
+                + "stid=" + stid
                 + ", statType='" + statType + '\''
                 + ", statDimension='" + statDimension + '\''
                 + ", dimensionId=" + dimensionId

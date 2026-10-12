@@ -15,8 +15,8 @@ import java.time.LocalDateTime;
 public class AqiStatSummary {
 
     /** 主键 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "smid", type = IdType.AUTO)
+    private Long smid;
 
     /** 统计周期，如 2026-10 */
     private String statPeriod;
@@ -45,12 +45,12 @@ public class AqiStatSummary {
     /** 更新时间 */
     private LocalDateTime updateTime;
 
-    public Long getId() {
-        return id;
+    public Long getSmid() {
+        return smid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setSmid(Long smid) {
+        this.smid = smid;
     }
 
     public String getStatPeriod() {
@@ -128,7 +128,7 @@ public class AqiStatSummary {
     @Override
     public String toString() {
         return "AqiStatSummary{"
-                + "id=" + id
+                + "smid=" + smid
                 + ", statPeriod='" + statPeriod + '\''
                 + ", measureTotal=" + measureTotal
                 + ", pollutionCount=" + pollutionCount
