@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -33,10 +34,10 @@ public class GridManagerInfo {
     private String workNo;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /** 更新时间 */
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 
     public Long getGmid() {
         return gmid;
@@ -86,19 +87,19 @@ public class GridManagerInfo {
         this.workNo = workNo;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

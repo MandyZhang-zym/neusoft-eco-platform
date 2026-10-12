@@ -147,7 +147,7 @@ DROP TABLE IF EXISTS sys_city;
 CREATE TABLE sys_city
 (
     cid         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
-    province_id BIGINT      NOT NULL COMMENT '所属省 id（sys_province.id）',
+    province_id BIGINT      NOT NULL COMMENT '所属省 id（sys_province.pid）',
     city_code   VARCHAR(12) NOT NULL COMMENT '市级行政区划代码',
     city_name   VARCHAR(50) NOT NULL COMMENT '城市名称',
     longitude   DECIMAL(10, 6) DEFAULT NULL COMMENT '中心经度',
@@ -206,7 +206,7 @@ DROP TABLE IF EXISTS sys_district;
 CREATE TABLE sys_district
 (
     did         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
-    city_id       BIGINT      NOT NULL COMMENT '所属市 id（sys_city.id）',
+    city_id       BIGINT      NOT NULL COMMENT '所属市 id（sys_city.cid）',
     district_code VARCHAR(12) NOT NULL COMMENT '区/县行政区划代码',
     district_name VARCHAR(50) NOT NULL COMMENT '区/县名称',
     sort_no       INT         NOT NULL DEFAULT 0 COMMENT '排序',
@@ -280,7 +280,7 @@ CREATE TABLE sys_user
     username        VARCHAR(50)  NOT NULL COMMENT '用户名（登录账号）',
     password        VARCHAR(100) NOT NULL COMMENT '密码（建议存 BCrypt 哈希，勿存明文）',
     phone           VARCHAR(20)  NOT NULL COMMENT '手机号（亦可作为登录账号）',
-    role_id         BIGINT       NOT NULL COMMENT '角色 id（sys_role.id）',
+    role_id         BIGINT       NOT NULL COMMENT '角色 id（sys_role.rid）',
     status          TINYINT      NOT NULL DEFAULT 1 COMMENT '状态：1=正常 0=禁用',
     last_login_time DATETIME     DEFAULT NULL COMMENT '最近登录时间',
     create_time     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
@@ -303,7 +303,7 @@ DROP TABLE IF EXISTS supervisor_info;
 CREATE TABLE supervisor_info
 (
     sid         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
-    user_id     BIGINT      NOT NULL COMMENT '账号 id（sys_user.id）',
+    user_id     BIGINT      NOT NULL COMMENT '账号 id（sys_user.uid）',
     real_name   VARCHAR(50) DEFAULT NULL COMMENT '姓名',
     gender      TINYINT     DEFAULT NULL COMMENT '性别：1=男 2=女',
     age         INT         DEFAULT NULL COMMENT '年龄',
@@ -326,8 +326,8 @@ DROP TABLE IF EXISTS grid_manager_info;
 CREATE TABLE grid_manager_info
 (
     gmid        BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
-    user_id     BIGINT      NOT NULL COMMENT '账号 id（sys_user.id）',
-    grid_id     BIGINT      DEFAULT NULL COMMENT '负责的网格 id（sys_grid.id，可为空表示多网格）',
+    user_id     BIGINT      NOT NULL COMMENT '账号 id（sys_user.uid）',
+    grid_id     BIGINT      DEFAULT NULL COMMENT '负责的网格 id（sys_grid.gid，可为空表示多网格）',
     real_name   VARCHAR(50) DEFAULT NULL COMMENT '姓名',
     gender      TINYINT     DEFAULT NULL COMMENT '性别：1=男 2=女',
     work_no     VARCHAR(32) DEFAULT NULL COMMENT '工号',
@@ -359,10 +359,10 @@ CREATE TABLE feedback_order
     oid         BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
     order_no           VARCHAR(32)  NOT NULL COMMENT '工单编号',
     reporter_id        BIGINT       NOT NULL COMMENT '上报人 user_id（公众监督员）',
-    grid_id            BIGINT       NOT NULL COMMENT '网格 id（sys_grid.id）',
+    grid_id            BIGINT       NOT NULL COMMENT '网格 id（sys_grid.gid）',
     province_id        BIGINT       NOT NULL COMMENT '冗余-省 id（管理端按省市筛选）',
     city_id            BIGINT       NOT NULL COMMENT '冗余-市 id',
-    estimated_level_id BIGINT       NOT NULL COMMENT '公众预估 AQI 等级 id（aqi_level.id）',
+    estimated_level_id BIGINT       NOT NULL COMMENT '公众预估 AQI 等级 id（aqi_level.lid）',
     feedback_content   VARCHAR(500) DEFAULT NULL COMMENT '反馈信息',
     feedback_time      DATETIME     NOT NULL COMMENT '反馈时间（公众填写/提交时间）',
     status             VARCHAR(20)  NOT NULL DEFAULT 'PENDING_ASSIGN' COMMENT '工单状态：PENDING_ASSIGN=待指派 ASSIGNED=已指派 CHECKED=已核查',
@@ -391,7 +391,7 @@ DROP TABLE IF EXISTS feedback_assign;
 CREATE TABLE feedback_assign
 (
     aid         BIGINT      NOT NULL AUTO_INCREMENT COMMENT '主键',
-    order_id        BIGINT      NOT NULL COMMENT '工单 id（feedback_order.id）',
+    order_id        BIGINT      NOT NULL COMMENT '工单 id（feedback_order.oid）',
     grid_manager_id BIGINT      NOT NULL COMMENT '目标网格员 user_id',
     assigner_id     BIGINT      NOT NULL COMMENT '操作人 user_id（系统管理员）',
     assign_time     DATETIME    NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '指派时间',
@@ -416,13 +416,13 @@ DROP TABLE IF EXISTS aqi_measure;
 CREATE TABLE aqi_measure
 (
     mid         BIGINT         NOT NULL AUTO_INCREMENT COMMENT '主键',
-    order_id          BIGINT         NOT NULL COMMENT '关联工单 id（feedback_order.id）',
+    order_id          BIGINT         NOT NULL COMMENT '关联工单 id（feedback_order.oid）',
     province_id       BIGINT         NOT NULL COMMENT '冗余-省 id（统计用）',
     city_id           BIGINT         NOT NULL COMMENT '冗余-市 id（统计用）',
     so2               DECIMAL(10, 2) DEFAULT NULL COMMENT 'SO2 浓度（ug/m³）',
     co                DECIMAL(10, 2) DEFAULT NULL COMMENT 'CO 浓度（ug/m³）',
     pm25              DECIMAL(10, 2) DEFAULT NULL COMMENT 'PM2.5 浓度（ug/m³）',
-    measured_level_id BIGINT         NOT NULL COMMENT '自动计算出的实测 AQI 等级 id（aqi_level.id）',
+    measured_level_id BIGINT         NOT NULL COMMENT '自动计算出的实测 AQI 等级 id（aqi_level.lid）',
     grid_manager_id   BIGINT         NOT NULL COMMENT '录入网格员 user_id',
     confirm_date      DATE           NOT NULL COMMENT '确认日期（列表筛选用）',
     confirm_time      DATETIME       NOT NULL COMMENT '确认时间',

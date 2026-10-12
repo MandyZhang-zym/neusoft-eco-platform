@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -48,7 +49,7 @@ public class OperLog {
     private String errorMsg;
 
     /** 操作时间 */
-    private LocalDateTime operTime;
+    private Timestamp operTime;
 
     public Long getOpid() {
         return opid;
@@ -138,11 +139,11 @@ public class OperLog {
         this.errorMsg = errorMsg;
     }
 
-    public LocalDateTime getOperTime() {
+    public Timestamp getOperTime() {
         return operTime;
     }
 
-    public void setOperTime(LocalDateTime operTime) {
+    public void setOperTime(Timestamp operTime) {
         this.operTime = operTime;
     }
 

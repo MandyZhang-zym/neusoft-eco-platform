@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -48,16 +49,16 @@ public class FeedbackOrder {
     private Long assigneeId;
 
     /** 最近一次指派时间 */
-    private LocalDateTime assignTime;
+    private Timestamp assignTime;
 
     /** 核查完成时间 */
-    private LocalDateTime checkTime;
+    private Timestamp checkTime;
 
     /** 创建时间 */
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /** 更新时间 */
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 
     public Long getOid() {
         return oid;
@@ -147,35 +148,35 @@ public class FeedbackOrder {
         this.assigneeId = assigneeId;
     }
 
-    public LocalDateTime getAssignTime() {
+    public Timestamp getAssignTime() {
         return assignTime;
     }
 
-    public void setAssignTime(LocalDateTime assignTime) {
+    public void setAssignTime(Timestamp assignTime) {
         this.assignTime = assignTime;
     }
 
-    public LocalDateTime getCheckTime() {
+    public Timestamp getCheckTime() {
         return checkTime;
     }
 
-    public void setCheckTime(LocalDateTime checkTime) {
+    public void setCheckTime(Timestamp checkTime) {
         this.checkTime = checkTime;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 
