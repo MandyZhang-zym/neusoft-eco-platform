@@ -38,10 +38,11 @@ mvnw spring-boot:run
 **3. 验证**
 
 ```bash
-mvnw test -Dtest=EcoUserMapperTests
+mvnw test -Dtest=DatabaseInitTests
 ```
 
-能查到 `admin` / `test` 两条数据即说明数据库链路正常。
+4 个测试全绿即说明「建表 + 字典 + 演示数据 + MyBatis-Plus 映射」整条链路正常。
+默认演示数据里有 6 个账号（`admin` / `supervisor01` / `supervisor02` / `manager01` / `manager02` / `decision01`，密码统一 `123456`）。
 
 ## 关于数据库：组员怎么用
 
@@ -58,13 +59,18 @@ spring.datasource.url=jdbc:mysql://192.168.1.100:3306/neusoft_eco?useUnicode=tru
 spring.datasource.password=xxx
 ```
 
-### 手动建库（可选）
+### 手动建库 + 建表（可选）
 
-只有当你的 MySQL 账号没有 `CREATE DATABASE` 权限、或想显式指定字符集时才需要：
+想不启动项目、直接用命令行把库和表一次建好：
 
 ```bash
-mysql -u root -p < sql/init.sql
+mysql -u root -p < sql/air_quality_schema.sql
 ```
+
+（该脚本 = 建库 + 15 张表 + 字典数据。应用启动时自动执行的是 `src/main/resources/sql/schema.sql` + `data.sql`，
+`air_quality_schema.sql` 只是「手动一键版」的便捷副本，两者表结构保持一致。）
+
+只想建库不想建表：`mysql -u root -p < sql/init.sql`
 
 ## 在 IDEA 里写 SQL
 
@@ -78,17 +84,43 @@ Host `127.0.0.1`、Port `3306`、User `root`、你自己的密码；驱动缺失
 ## 目录结构
 
 ```
-sql/init.sql                                手动建库脚本（可选）
+sql/
+  ├─ air_quality_schema.sql                 手动一键脚本：建库 + 15 张表 + 字典（可选）
+  └─ init.sql                               只建库（可选）
 src/main/java/com/sakura/neusoftecoplatform/
   ├─ NeusoftEcoPlatformApplication.java     启动类
-  ├─ entity/EcoUser.java                    实体
-  └─ mapper/EcoUserMapper.java              MyBatis-Plus Mapper
+  ├─ entity/                                15 个 MyBatis-Plus 实体
+  └─ mapper/                                15 个 Mapper
 src/main/resources/
   ├─ application.properties                 公共配置（提交）
   ├─ application-local.properties           本机密码（不提交）
   ├─ application-local.properties.example   模板（提交）
-  └─ sql/schema.sql, sql/data.sql           建表 / 示例数据（启动时自动执行）
+  └─ sql/
+      ├─ schema.sql                         15 张表 DDL + 字典数据（启动时自动执行）
+      └─ data.sql                           演示数据（启动时自动执行）
 ```
+
+## 数据库表清单（15 张）
+
+| 分类 | 表名 | 说明 |
+| --- | --- | --- |
+| 字典 | `sys_role` | 角色：公众监督员 / 网格员 / 系统管理员 / 决策者 |
+| 字典 | `aqi_level` | 空气质量指数分类（优~严重污染，含大屏配色） |
+| 字典 | `sys_province` | 省表（34 个省级行政区） |
+| 字典 | `sys_city` | 市表（示例 30 条，完整数据需另行导入） |
+| 字典 | `sys_district` | 区/县表 |
+| 字典 | `sys_grid` | 网格表（省-市-区县-网格） |
+| 用户 | `sys_user` | 账号信息（用户名/手机号均可登录） |
+| 用户 | `supervisor_info` | 公众监督员信息（性别、年龄） |
+| 用户 | `grid_manager_info` | 网格员信息 |
+| 业务 | `feedback_order` | 公众反馈工单（待指派 / 已指派 / 已核查） |
+| 业务 | `feedback_assign` | 工单指派记录 |
+| 业务 | `aqi_measure` | AQI 实测数据（SO₂ / CO / PM2.5，工单唯一） |
+| 统计 | `aqi_statistics` | 统计数据（等级分布 / 各省超标 / 12 个月趋势 / 覆盖率 / 污染物超标） |
+| 统计 | `aqi_stat_summary` | 大屏指标卡片汇总 |
+| 日志 | `oper_log` | 操作日志 |
+
+详细字段含义见 `src/main/resources/sql/schema.sql` 中的中文注释。
 
 ## 常见问题
 

@@ -7,28 +7,38 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.time.LocalDateTime;
 
 /**
- * 示例用户表 eco_user 对应的实体。
- * 字段名与表字段按下划线转驼峰规则自动映射（见 application.properties）。
+ * 账号信息表
+ * <p>对应数据库表 {@code sys_user}</p>
  */
-@TableName("eco_user")
-public class EcoUser {
+@TableName("sys_user")
+public class SysUser {
 
+    /** 主键 */
     @TableId(type = IdType.AUTO)
     private Long id;
 
+    /** 用户名（登录账号） */
     private String username;
 
+    /** 密码（建议存 BCrypt 哈希，勿存明文） */
     private String password;
 
-    private String nickname;
+    /** 手机号（亦可作为登录账号） */
+    private String phone;
 
-    private String email;
+    /** 角色 id（sys_role.id） */
+    private Long roleId;
 
-    /** 1=正常，0=禁用 */
+    /** 状态：1=正常 0=禁用 */
     private Integer status;
 
+    /** 最近登录时间 */
+    private LocalDateTime lastLoginTime;
+
+    /** 创建时间 */
     private LocalDateTime createTime;
 
+    /** 更新时间 */
     private LocalDateTime updateTime;
 
     public Long getId() {
@@ -55,20 +65,20 @@ public class EcoUser {
         this.password = password;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getEmail() {
-        return email;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public Integer getStatus() {
@@ -77,6 +87,14 @@ public class EcoUser {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public LocalDateTime getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(LocalDateTime lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
     }
 
     public LocalDateTime getCreateTime() {
@@ -97,12 +115,16 @@ public class EcoUser {
 
     @Override
     public String toString() {
-        return "EcoUser{id=" + id
+        return "SysUser{"
+                + "id=" + id
                 + ", username='" + username + '\''
-                + ", nickname='" + nickname + '\''
-                + ", email='" + email + '\''
+                + ", password='" + password + '\''
+                + ", phone='" + phone + '\''
+                + ", roleId=" + roleId
                 + ", status=" + status
+                + ", lastLoginTime=" + lastLoginTime
                 + ", createTime=" + createTime
+                + ", updateTime=" + updateTime
                 + '}';
     }
 }
